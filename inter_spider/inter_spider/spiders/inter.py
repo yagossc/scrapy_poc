@@ -93,3 +93,13 @@ class InterMatches(scrapy.Spider):
                     except:
                         raise Exception("Could not write to file")
         f.close()
+
+        # remove duplicate lines from file
+        lines_seen = set()
+        outfile = open("output.csv", "w")
+        for line in open("tmp_output.csv", "r"):
+            if line not in lines_seen: # not a duplicate
+                outfile.write(line)
+                lines_seen.add(line)
+
+        outfile.close()
