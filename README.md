@@ -44,6 +44,7 @@ As suggested in the official scrapy docs, it is recommended to use a virtual env
 
 This scrapy project takes a list of teams as argument, so run it as follows:
 ```bash
+ > cd inter_spider
  > scrapy crawl -a teams_list=list inter
  # OR, to run using docker
  > sh run.sh
@@ -51,7 +52,7 @@ This scrapy project takes a list of teams as argument, so run it as follows:
 
 ## Expected output:
 
-The main output artifact is the file `~/inter_spider/output.csv` containing the game results for the teams listed in the input file `list` (already provided in the repository).
+The main output artifact is the file `~/inter_spider/output.csv` containing the game results for the teams listed in the input file `~/inter_spider/list` (already provided in the repository).
 
 The output file format is:
 > Team_name_1,Score,Team_name_2,Score
