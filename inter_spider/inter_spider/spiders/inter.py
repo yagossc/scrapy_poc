@@ -32,4 +32,19 @@ class InterMatches(scrapy.Spider):
 
     # Crawl/Fetch the game results (if available)
     def crawl_championships(self, response):
-        print(response)
+        game_results = []
+        matches = response.xpath('//a[@data-reveal-id]')
+
+        for match in matches:
+            matchup_list = match.xpath('./ul/li')
+            game_text = []
+            for matchup_info in matchup_list:
+                team_name = matchup_info.xpath('./strong/text()').get()
+                if team_name != None:
+                    game_text.append(team_name)
+                result = matchup_info.xpath('./span/text()').get()
+                if result != None:
+                    game_text.append(result)
+            if len(game_text) == 4:
+                game_results.append(game_text)
+        print(game_results)
