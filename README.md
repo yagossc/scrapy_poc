@@ -5,6 +5,9 @@ Python/Scrapy test
 - Python 3.5 or above
 - Scrapy
 
+If you're using docker:
+- docker && docker-compose
+
 ## Python Version 3.8
 
 As suggested in the official scrapy docs, it is recommended to use a virtual env, therefore, in order to use the python version requested by the test, a virtual environment will be setup as follows:
@@ -42,11 +45,13 @@ As suggested in the official scrapy docs, it is recommended to use a virtual env
 This scrapy project takes a list of teams as argument, so run it as follows:
 ```bash
  > scrapy crawl -a teams_list=list inter
+ # OR, to run using docker
+ > sh run.sh
 ```
 
 ## Expected output:
 
-The main out arctifact is the file `output.csv` containing the game results for the teams listed in the input file `list` (already provided in the repository).
+The main output artifact is the file `~/inter_spider/output.csv` containing the game results for the teams listed in the input file `list` (already provided in the repository).
 
 The output file format is:
 > Team_name_1,Score,Team_name_2,Score
