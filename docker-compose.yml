@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  python:
+    build:
+      context: ./
+      dockerfile: knewin.dockerfile
+    volumes:
+      - ./inter_spider:/app
