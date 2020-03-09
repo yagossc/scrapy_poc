@@ -1,5 +1,28 @@
 import scrapy
 
+# read teams list from file
+def read_list(file_name):
+    f = open(file_name)
+    teams = [team.strip() for team in f.readlines()]
+    f.close()
+    return teams
+
+def gen_csv_entry(entry):
+    csv_entry = []
+    for item in entry:
+        csv_entry.append(item)
+        csv_entry.append(",")
+
+    # pop unwanted ,
+    csv_entry.pop()
+    csv_entry.append("\n")
+    csv_string = ''.join(csv_entry)
+    return csv_string
+
+# Target teams array
+global target_teams
+target_teams = []
+
 class InterMatches(scrapy.Spider):
     name = "inter"
 
@@ -8,6 +31,17 @@ class InterMatches(scrapy.Spider):
         urls = [
             'http://www.internacional.com.br/conteudo?modulo=3&setor=62'
         ]
+
+        # this crawler requires a list of teams as input
+        try:
+            file_name = self.teams_list
+        except:
+            raise Exception("No teams list provided")
+            exit(1)
+
+        # set the teams list
+        global target_teams
+        target_teams = read_list(file_name)
 
         # make a request for each url
         for url in urls:
@@ -47,4 +81,15 @@ class InterMatches(scrapy.Spider):
                     game_text.append(result)
             if len(game_text) == 4:
                 game_results.append(game_text)
-        print(game_results)
+
+        # Create file to store results
+        f = open('tmp_output.csv', 'a+')
+        for game in game_results:
+            for team in target_teams:
+                if game[0] == team or game[2] == team:
+                    csv_entry = gen_csv_entry(game)
+                    try:
+                        f.write(csv_entry)
+                    except:
+                        raise Exception("Could not write to file")
+        f.close()
