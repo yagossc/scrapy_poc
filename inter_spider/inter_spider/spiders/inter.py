@@ -13,11 +13,15 @@ class InterMatches(scrapy.Spider):
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse_championship_links)
 
+    # Parse the championship links in the given page
     def parse_championship_links(self, response):
+        # The championships' links share the same base xpath
         championships_xpath = '/html/body/section/div/div[1]/div/p'
 
+        # Allocate variable for championships' links
         championship_links = []
 
+        # Iterate over the <p> elements and get the championship links
         for p in response.xpath(championships_xpath):
             next_link = p.xpath('./a/@href').get()
             championship_links.append(response.urljoin(next_link))
