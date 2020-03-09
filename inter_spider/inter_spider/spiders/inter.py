@@ -26,4 +26,10 @@ class InterMatches(scrapy.Spider):
             next_link = p.xpath('./a/@href').get()
             championship_links.append(response.urljoin(next_link))
 
-        print(championship_links)
+        # Iterate/crawl each championship link
+        for championship_link in championship_links:
+            yield scrapy.Request(url=championship_link, callback=self.crawl_championships)
+
+    # Crawl/Fetch the game results (if available)
+    def crawl_championships(self, response):
+        print(response)
