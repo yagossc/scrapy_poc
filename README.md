@@ -1,5 +1,5 @@
-# Knewin Python Test
-Python/Scrapy test
+# A scrapy poc
+Python/Scrapy
 
 ## Dependencies
 - Python 3.5 or above
